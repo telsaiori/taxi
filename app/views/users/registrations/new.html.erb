@@ -1,55 +1,83 @@
 <h2>Sign up</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'form-horizontal signup_form', role: 'form', name: "test"}) do |f| %>
   <%= devise_error_messages! %>
+  <div class="form1">
+    <div class="field form-group">
+      <%= f.label :email, class: 'col-sm-2 control-label'%>
+      <div class= "col-sm-10">
+        <%= f.email_field :email, class: 'form-control', name: 'email', autofocus:true  %>
+      </div>
 
-  <div class="field">
-    <%= f.label :email %><br/>
-    <%= f.email_field :email, autofocus: true %>
+    </div>
+
+    <div class="field form-group">
+      <%= f.label :password, class: 'col-sm-2 control-label'  %>
+      <% if @minimum_password_length %>
+      <em>(<%= @minimum_password_length %> characters minimum)</em>
+      <% end %>
+      <div class= "col-sm-10">
+        <%= f.password_field :password, autocomplete: "off", class: 'form-control', name: 'password' %>
+      </div>
+    </div>
+
+    <div class="field form-group">
+      <%= f.label :password_confirmation, class: 'col-sm-2 control-label' %>
+      <div class= "col-sm-10">
+        <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control', name: 'password_confirmation' %>
+      </div>
+    </div>
+
+    <div class="field form-group">
+      <%= f.label :name, class: 'col-sm-2 control-label' %>
+      <div class= "col-sm-10">
+        <%= f.text_field :name, class: 'form-control', name: 'name' %>
+      </div>
+    </div>
+
+    <div class="field">
+      <%= f.label :"Gender: ", class: 'col-sm-2 control-label' %>
+      <%= f.radio_button :gender, :man%> <%= f.label :man, class: 'radio-inline' %>
+      <%= f.radio_button :gender, :woman%> <%= f.label :woman, class: 'radio-inline' %>
+    </div>
+
+    <div class="field form-group">
+      <%= f.label :id, class: 'col-sm-2 control-label' %>
+      <div class= "col-sm-10">
+        <%= f.text_field :id_no, class: 'form-control', name: 'id_no' %>
+      </div>
+    </div>
+
+    <div class="field form-group">
+      <%= f.label :Address, class: 'col-sm-2 control-label' %>
+      <div class= "col-sm-10">
+        <%= f.text_field :address, class: 'form-control', name: 'address' %>
+      </div>
+    </div>
+
+     <div class="field form-group">
+      <%= f.label :TEL, class: 'col-sm-2 control-label' %>
+      <div class= "col-sm-10">
+        <%= f.phone_field :tel, class: 'form-control', name: 'tel' %>
+      </div>
+    </div> 
+    
+    <input type="button" value="Next Step" class="fake_btn"/>
   </div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
+  <div class='form2'>
+    <div class="field form-group">
+      <%= f.label :credit_card, class: 'col-sm-2 control-label'%>
+      <div class= "col-sm-10">
+        <%= f.number_field :credit_card_no, class: 'form-control' %>
+      </div>
+    </div>
+    
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-
-  <div class="field">
-    <br />
-    <%= f.label :"Gender: " %><br />
-    <%= f.radio_button :gender, :man%> <%= f.label :man %>
-    <%= f.radio_button :gender, :woman%> <%= f.label :woman %>
-  </div>
-
-  <div class="field">
-    <%= f.label :ID_card_number %><br />
-    <%= f.text_field :id_no %>
-  </div>
-
-  <div class="field">
-    <%= f.label :Address %><br />
-    <%= f.text_field :address %>
-  </div>
-
-   <div class="field">
-    <%= f.label :TEL %><br />
-    <%= f.phone_field :tel %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
+    
+    <div class="actions">
+      <%= f.submit "Sign up", class: 'btn btn-default' %>
+    </div>
   </div>
 <% end %>
 

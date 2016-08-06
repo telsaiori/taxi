@@ -6,6 +6,7 @@ gem 'rails', '~> 5.0.0'
 # Use sqlite3 as the database for Active Record
 gem 'devise'
 gem 'bootstrap-sass'
+gem 'simple_form'
 
 gem 'sqlite3'
 # Use Puma as the app server
