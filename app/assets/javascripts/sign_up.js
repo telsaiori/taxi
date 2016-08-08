@@ -6,16 +6,23 @@ $(document).ready(function(){
 
   $(".signup_form").validate({
     rules: {
-      email: "required",
-      password: "required",
-      password_confirmation: "required",
-      name: "required",
-      id_no: "required",
-      address: "required",
-      tel: "required"
+      "user[email]": "required",
+      "user[password]": "required",
+      "user[password_confirmation]": "required",
+      "user[name]": "required",
+      "user[id_no]": "required",
+      "user[address]": "required",
+      "user[tel]": "required"
     },
     messages: {
-      name: "名子勒？"
-    }  
+      "user[name]": "名子勒？",
+    },
+    errorPlacement: function(error, element){
+      if (element.is("input:radio")){
+        error.appendTo(element.parent());
+      } else {
+        error.insertAfter(element);
+      }
+    } 
   });
 });

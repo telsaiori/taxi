@@ -1,84 +1,74 @@
 <h2>Sign up</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'form-horizontal signup_form', role: 'form', name: "test"}) do |f| %>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'form-horizontal signup_form', role: 'form'}) do |f| %>
   <%= devise_error_messages! %>
-  <div class="form1">
     <div class="field form-group">
       <%= f.label :email, class: 'col-sm-2 control-label'%>
       <div class= "col-sm-10">
-        <%= f.email_field :email, class: 'form-control', name: 'email', autofocus:true  %>
+        <%= f.email_field :email, class: 'form-control', autofocus:true  %>
       </div>
 
     </div>
 
     <div class="field form-group">
-      <%= f.label :password, class: 'col-sm-2 control-label'  %>
+      <%= f.label :password,"密碼", class: 'col-sm-2 control-label'  %>
       <% if @minimum_password_length %>
       <em>(<%= @minimum_password_length %> characters minimum)</em>
       <% end %>
       <div class= "col-sm-10">
-        <%= f.password_field :password, autocomplete: "off", class: 'form-control', name: 'password' %>
+        <%= f.password_field :password, autocomplete: "off", class: 'form-control'%>
       </div>
     </div>
 
     <div class="field form-group">
-      <%= f.label :password_confirmation, class: 'col-sm-2 control-label' %>
+      <%= f.label :password_confirmation,"確認密碼", class: 'col-sm-2 control-label' %>
       <div class= "col-sm-10">
-        <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control', name: 'password_confirmation' %>
+        <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
       </div>
     </div>
 
     <div class="field form-group">
-      <%= f.label :name, class: 'col-sm-2 control-label' %>
+      <%= f.label :name,"姓名", class: 'col-sm-2 control-label' %>
       <div class= "col-sm-10">
-        <%= f.text_field :name, class: 'form-control', name: 'name' %>
+        <%= f.text_field :name, class: 'form-control'%>
       </div>
     </div>
 
-    <div class="field">
-      <%= f.label :"Gender: ", class: 'col-sm-2 control-label' %>
-      <%= f.radio_button :gender, :man%> <%= f.label :man, class: 'radio-inline' %>
-      <%= f.radio_button :gender, :woman%> <%= f.label :woman, class: 'radio-inline' %>
-    </div>
-
-    <div class="field form-group">
-      <%= f.label :id, class: 'col-sm-2 control-label' %>
-      <div class= "col-sm-10">
-        <%= f.text_field :id_no, class: 'form-control', name: 'id_no' %>
+    <div class="field form-group" >
+      <%= f.label :"Gender: ", "性別", class: 'col-sm-2 control-label' %>
+      <div class="col-sm-10">
+      <%= f.radio_button :gender, :man, class: "radio-inline required"%> 
+      <%= f.label :man,"男", class: 'radio-inline'%>
+      <%= f.radio_button :gender, :woman%> 
+      <%= f.label :woman,"女", class: 'radio-inline'%>
       </div>
     </div>
 
     <div class="field form-group">
-      <%= f.label :Address, class: 'col-sm-2 control-label' %>
+      <%= f.label :id,"身分證字號", class: 'col-sm-2 control-label' %>
       <div class= "col-sm-10">
-        <%= f.text_field :address, class: 'form-control', name: 'address' %>
+        <%= f.text_field :id_no, class: 'form-control' %>
+      </div>
+    </div>
+
+    <div class="field form-group">
+      <%= f.label :Address,"地址", class: 'col-sm-2 control-label' %>
+      <div class= "col-sm-10">
+        <%= f.text_field :address, class: 'form-control' %>
       </div>
     </div>
 
      <div class="field form-group">
-      <%= f.label :TEL, class: 'col-sm-2 control-label' %>
+      <%= f.label :TEL,"電話號碼", class: 'col-sm-2 control-label' %>
       <div class= "col-sm-10">
-        <%= f.phone_field :tel, class: 'form-control', name: 'tel' %>
-      </div>
-    </div> 
-    
-    <input type="button" value="Next Step" class="fake_btn"/>
-  </div>
-
-  <div class='form2'>
-    <div class="field form-group">
-      <%= f.label :credit_card, class: 'col-sm-2 control-label'%>
-      <div class= "col-sm-10">
-        <%= f.number_field :credit_card_no, class: 'form-control' %>
+        <%= f.phone_field :tel, class: 'form-control' %>
       </div>
     </div>
-    
 
-    
-    <div class="actions">
-      <%= f.submit "Sign up", class: 'btn btn-default' %>
+    <div class="actions form-group">
+      <%= f.submit "註冊", class: 'btn btn-primary center-block' %>
     </div>
-  </div>
+
 <% end %>
 
 <%= render "devise/shared/links" %>
