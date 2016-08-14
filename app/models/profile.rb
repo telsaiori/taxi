@@ -4,6 +4,6 @@ class Profile < ApplicationRecord
   has_many :language, through: :profile_languages
   has_many :profile_cars
   has_many :profile_equiments
-  has_many :profile_language
+  has_many :profile_languages
   belongs_to :user
 end

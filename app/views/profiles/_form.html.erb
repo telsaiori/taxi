@@ -37,7 +37,16 @@
         <%= b.check_box class: "checkbox-inline" %>
         <%= b.label %>
       <% end %>
-      
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :name, "語言", class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.collection_check_boxes(:language_ids, Language.all, :id, :name) do |b| %>
+        <%= b.check_box class: "checkbox-inline" %>
+        <%= b.label %>
+      <% end %>
     </div>
   </div>
 
