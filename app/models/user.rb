@@ -8,4 +8,5 @@ class User < ApplicationRecord
   validates :id_no, presence: true
   validates :address, presence: true
   validates :tel, presence: true
+  has_one :profile, dependent: :destroy
 end
