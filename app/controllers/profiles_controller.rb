@@ -18,7 +18,7 @@ class ProfilesController < ApplicationController
   private
 
   def profile_params
-    params.require(:profile).permit(:name, :car_age, :capacity, { 
+    params.require(:profile).permit(:name, :car_age, :capacity, :insurance, { 
                               car_ids:[],equiment_ids:[], language_ids:[] })
   end
 end
