@@ -10,12 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160814093733) do
+ActiveRecord::Schema.define(version: 20160814153856) do
 
   create_table "cars", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "name"
+    t.boolean  "is_default"
+    t.integer  "position"
+    t.index ["is_default"], name: "index_cars_on_is_default"
+    t.index ["position"], name: "index_cars_on_position"
   end
 
   create_table "equiments", force: :cascade do |t|
