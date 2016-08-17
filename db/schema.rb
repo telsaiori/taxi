@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160814154410) do
+ActiveRecord::Schema.define(version: 20160815090739) do
 
   create_table "cars", force: :cascade do |t|
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.string   "name"
-    t.boolean  "is_default", default: false
+    t.boolean  "is_default", default: false, null: false
     t.integer  "position"
     t.index ["is_default"], name: "index_cars_on_is_default"
     t.index ["position"], name: "index_cars_on_position"
@@ -24,14 +24,17 @@ ActiveRecord::Schema.define(version: 20160814154410) do
 
   create_table "equiments", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "is_default", default: false, null: false
+    t.index ["is_default"], name: "index_equiments_on_is_default"
   end
 
   create_table "languages", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "is_default", default: false, null: false
   end
 
   create_table "profile_cars", force: :cascade do |t|
