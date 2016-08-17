@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160815090739) do
+ActiveRecord::Schema.define(version: 20160817122014) do
 
   create_table "cars", force: :cascade do |t|
     t.datetime "created_at",                 null: false
@@ -28,6 +28,22 @@ ActiveRecord::Schema.define(version: 20160815090739) do
     t.datetime "updated_at",                 null: false
     t.boolean  "is_default", default: false, null: false
     t.index ["is_default"], name: "index_equiments_on_is_default"
+  end
+
+  create_table "for_airports", force: :cascade do |t|
+    t.string   "location"
+    t.boolean  "is_default", default: false, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["is_default"], name: "index_for_airports_on_is_default"
+  end
+
+  create_table "for_travels", force: :cascade do |t|
+    t.string   "location"
+    t.boolean  "is_default", default: false, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["is_default"], name: "index_for_travels_on_is_default"
   end
 
   create_table "languages", force: :cascade do |t|
@@ -49,6 +65,20 @@ ActiveRecord::Schema.define(version: 20160815090739) do
     t.integer  "equiment_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "profile_for_airports", force: :cascade do |t|
+    t.integer  "profile_id"
+    t.integer  "for_airport_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  create_table "profile_for_travels", force: :cascade do |t|
+    t.integer  "profile_id"
+    t.integer  "for_travel_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "profile_languages", force: :cascade do |t|

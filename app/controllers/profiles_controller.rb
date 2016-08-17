@@ -51,17 +51,32 @@ class ProfilesController < ApplicationController
         end
       end
 
-      if params[:is_custom_eq] && params[:custom_eq]
-        custom_eq = params[:custom_eq].to_s.strip
-        unless custom_eq.empty?
-          equiment = Equiment.where(name: custom_eq).first
-          if equiment
-            unless ProfileEquiment.where(profile_id: current_user.profile.id, equiment_id: equiment.id ) > 0
-              ProfileEquiment.create( profile_id: current_user.profile.id, equiment_id: equiment.id )
+      if params[:is_custom_lan] && params[:custom_lan]
+        custom_lan = params[:custom_lan].to_s.strip
+        unless custom_lan.empty?
+          language = Language.where(name: custom_lan).first
+          if language
+            unless ProfileLanguage.where(profile_id: current_user.profile.id, language_id: language.id ) > 0
+              ProfileLanguage.create( profile_id: current_user.profile.id, language_id: language.id)
             end
           else
-            equiment = Equiment.create(name: custom_eq)
-            ProfileEquiment.create(profile_id: current_user.profile.id, equiment_id: equiment.id)
+            language = Language.create(name: custom_lan)
+            ProfileLanguage.create(profile_id: current_user.profile.id, language_id: language.id)
+          end
+        end
+      end
+
+      if params[:is_travel]&&params[:is_custom_travel] && params[:custom_travel]
+        custom_travel = params[:custom_travel].to_s.strip
+        unless custom_travel.empty?
+          for_travel = ForTravel.where(location: custom_travel).first
+          if for_travel
+            unless ProfileForTravel.where(profile_id: current_user.profile.id, for_travel_id: for_travel.id ) > 0
+              ProfileForTravel.create( profile_id: current_user.profile.id, for_travel_id: for_travel.id)
+            end
+          else
+            for_travel = ForTravel.create(location: custom_travel)
+            ProfileForTravel.create(profile_id: current_user.profile.id, for_travel_id: for_travel.id)
           end
         end
       end
@@ -78,7 +93,7 @@ class ProfilesController < ApplicationController
 
   def profile_params
     params.require(:profile).permit(:name, :car_age, :capacity, :insurance, { 
-                              car_ids:[],equiment_ids:[], language_ids:[] })
+                              car_ids:[],equiment_ids:[], language_ids:[], for_travel_ids:[] })
   end
 
   def set_profile

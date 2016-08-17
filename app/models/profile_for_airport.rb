@@ -1,0 +1,2 @@
+class ProfileForAirport < ApplicationRecord
+end

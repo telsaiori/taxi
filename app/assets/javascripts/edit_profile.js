@@ -31,4 +31,22 @@ function custom_lan_disable(){
   }
 }
 
+function for_travel(){
+  var i;
+  var x = document.getElementsByName("profile[for_travel_ids][]")
+  if (document.getElementById("is_travel").checked){
+    for (i=1; i<=x.length-1; i++){
+      x[i].disabled = false;
+    }
+    document.getElementById("is_custom_travel").disabled = false; 
+    document.getElementById("custom_travel").disabled = false;
+  }else {
+    for (i=1; i<=x.length-1; i++){
+      x[i].disabled = true;
+    }  
+    document.getElementById("is_custom_travel").disabled = true;  
+    document.getElementById("custom_travel").disabled = true;
+  }
+}
+
 
