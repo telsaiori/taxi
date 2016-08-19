@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160817122014) do
+ActiveRecord::Schema.define(version: 20160819042457) do
 
   create_table "cars", force: :cascade do |t|
     t.datetime "created_at",                 null: false
@@ -36,6 +36,14 @@ ActiveRecord::Schema.define(version: 20160817122014) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.index ["is_default"], name: "index_for_airports_on_is_default"
+  end
+
+  create_table "for_high_rails", force: :cascade do |t|
+    t.string   "location"
+    t.boolean  "is_default", default: false, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["is_default"], name: "index_for_high_rails_on_is_default"
   end
 
   create_table "for_travels", force: :cascade do |t|
@@ -72,6 +80,13 @@ ActiveRecord::Schema.define(version: 20160817122014) do
     t.integer  "for_airport_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+  end
+
+  create_table "profile_for_high_rails", force: :cascade do |t|
+    t.integer  "profile_id"
+    t.integer  "for_hr_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "profile_for_travels", force: :cascade do |t|

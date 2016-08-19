@@ -78,7 +78,7 @@
     <%= f.label :services, "服務項目", class: "col-sm-2 control-label" %>
     <div class="col-sm-10">
     <%= check_box_tag :is_travel, nil ,nil, onclick: "for_travel();"%>
-    <%= label_tag "旅遊包車"%>
+    <%= label_tag "旅遊包車:"%>
     </div>
     <div class="col-sm-10">
         <%= label_tag :service_location, "可接送地:", class: "control-label" %>
@@ -86,10 +86,36 @@
           <%= b.check_box class: "checkbox-inline", disabled: true%>
           <%= b.label %>
         <% end %>
-        <%= check_box_tag :is_custom_travel,nil ,nil, disabled: true %>其他<%= text_field_tag :custom_travel, nil,  disabled: true %>
+        <%= check_box_tag :is_custom_travel,nil ,nil, disabled: true, onclick: "for_travel_etc();" %>其他<%= text_field_tag :custom_travel, nil,  disabled: true %>
+    </div>
+    
+    <div class="col-sm-offset-2 col-sm-10 ">
+    <%= check_box_tag :is_airport, nil ,nil, onclick: "for_airport();"%>
+    <%= label_tag "機場接送:", nil, class: "control-label"%>
+    </div>
+
+    <div class="col-sm-offset-2 col-sm-10 ">
+      <%= f.collection_check_boxes(:for_airport_ids, ForAirport.where(is_default: true), :id, :location) do |b| %>
+        <%= b.check_box class: "checkbox-inline", disabled: true%>
+        <%= b.label class: "control-label"%>
+      <% end %>
+      <%= check_box_tag :is_custom_airport,nil, nil, disabled: true, onclick: "for_airport_etc();" %>
+      <%= label_tag "其他" %>
+      <%= text_field_tag :custom_airport,nil , disabled:true %>
+    </div>
+
+    <div class="col-sm-10 col-sm-offset-2">
+      <%= check_box_tag :is_high_rail,nil,nil, onclick: "for_high_rail();" %>
+      <%= label_tag "高鐵接送",nil, class: "control-label" %>
+    </div>
+
+    <div class="col-sm-10 col-sm-offset-2">
+      <%= f.collection_check_boxes(:for_high_rail_ids, ForHighRail.where(is_default: true), :id, :location) do |b| %>
+      <%= b.check_box class: "checkbox-inline", disabled: true %>
+      <%= b.label class: "control-label" %>
+      <% end %>
     </div>
   </div>
-
 
   
   <%= f.submit "完成", class: "btn btn-primary" %>

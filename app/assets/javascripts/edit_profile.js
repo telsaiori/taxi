@@ -39,13 +39,57 @@ function for_travel(){
       x[i].disabled = false;
     }
     document.getElementById("is_custom_travel").disabled = false; 
-    document.getElementById("custom_travel").disabled = false;
   }else {
     for (i=1; i<=x.length-1; i++){
       x[i].disabled = true;
     }  
     document.getElementById("is_custom_travel").disabled = true;  
-    document.getElementById("custom_travel").disabled = true;
+  }
+}
+
+function for_travel_etc(){
+  if (document.getElementById("is_custom_travel").checked){
+    document.getElementById("custom_travel").disabled = false
+  }else{
+    document.getElementById("custom_travel").disabled = true
+  }
+}
+
+function for_airport(){
+  var i;
+  var x = document.getElementsByName("profile[for_airport_ids][]")
+  if (document.getElementById("is_airport").checked){
+    for (i=1; i<=x.length-1; i++){
+      x[i].disabled = false;
+    }
+    document.getElementById("is_custom_airport").disabled = false; 
+  }else {
+    for (i=1; i<=x.length-1; i++){
+      x[i].disabled = true;
+    }  
+    document.getElementById("is_custom_airport").disabled = true;  
+  }
+}
+
+function for_airport_etc(){
+  if (document.getElementById("is_custom_airport").checked){
+    document.getElementById("custom_airport").disabled = false
+  }else{
+    document.getElementById("custom_airport").disabled = true
+  }
+}
+
+function for_high_rail(){
+  var i;
+  var x = document.getElementsByName("profile[for_high_rail_ids][]")
+  if (document.getElementById("is_high_rail").checked){
+    for( i=1; i <= x.length-1; i++){
+      x[i].disabled = false;
+    }
+  }else{
+    for( i=1; i <= x.length-1; i++){
+      x[i].disabled = true;
+    }
   }
 }
 

@@ -80,6 +80,22 @@ class ProfilesController < ApplicationController
           end
         end
       end
+
+      if params[:is_airport]&&params[:is_custom_airport]&&params[:custom_airport]
+        custom_airport = params[:custom_airport].to_s.strip
+        unless custom_airport.empty?
+          for_airport = ForAirport.where(location: custom_airport).first
+          if for_airport
+            unless ProfileForAirport.where(profile_id: current_user.profile.id, for_airport_id: for_airport.id) > 0
+              ProfileForAirport.create(profile_id: current_user.profile.id, for_airport_id: for_airport.id)
+            end
+          else
+            for_airport = ForAirport.create(location: custom_airport)
+            ProfileForAirport.create(profile_id: current_user.profile.id, for_airport_id: for_airport.id)
+          end
+        end
+      end
+      
       redirect_to root_url
     else
       render action: 'new'
@@ -93,7 +109,7 @@ class ProfilesController < ApplicationController
 
   def profile_params
     params.require(:profile).permit(:name, :car_age, :capacity, :insurance, { 
-                              car_ids:[],equiment_ids:[], language_ids:[], for_travel_ids:[] })
+                              car_ids:[],equiment_ids:[], language_ids:[], for_travel_ids:[], for_airport_ids:[],for_high_rail_ids:[] })
   end
 
   def set_profile
