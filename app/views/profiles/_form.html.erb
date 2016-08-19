@@ -106,7 +106,7 @@
 
     <div class="col-sm-10 col-sm-offset-2">
       <%= check_box_tag :is_high_rail,nil,nil, onclick: "for_high_rail();" %>
-      <%= label_tag "高鐵接送",nil, class: "control-label" %>
+      <%= label_tag "高鐵接送:",nil, class: "control-label" %>
     </div>
 
     <div class="col-sm-10 col-sm-offset-2">
@@ -117,6 +117,46 @@
     </div>
   </div>
 
+  <div class= "form-group">
+    <%= label_tag "價格",nil,  class: "control-label col-sm-2" %>
+    
+    <div class="col-sm-10">
+      <%= label_tag "半日", nil, class: "control-label" %>
+      <%= radio_button_tag :half, 4%>
+      <%=label_tag "4", nil, class: "control-label" %>
+      <%= radio_button_tag :half, 5%>
+      <%=label_tag "5", nil, class: "control-label" %>
+      <%=label_tag "小時,", nil, class: "control-label" %>
+      <%= number_field_tag :half_day_price, nil %>
+      <%=label_tag "元", nil, class: "control-label" %>
+    </div>
+
+    <div class="col-sm-10 col-sm-offset-2">
+      <%= label_tag "一日", nil, class: "control-label" %>
+      <%= radio_button_tag :full, 4%>
+      <%=label_tag "8", nil, class: "control-label" %>
+      <%= radio_button_tag :full, 5%>
+      <%=label_tag "10", nil, class: "control-label" %>
+      <%=label_tag "小時,", nil, class: "control-label" %>
+      <%= number_field_tag :full_day_price, nil %>
+      <%=label_tag "元", nil, class: "control-label" %>
+    </div>
   
-  <%= f.submit "完成", class: "btn btn-primary" %>
+    <div class="col-sm-10 col-sm-offset-2">
+      <%= f.label :over_work_time,"超時時段", class: "control-label" %>
+      <%= select_hour(0, {ampm: true} ,class:'control-label') %>
+      <%= f.label :over_work_time,"~", class: "control-label" %>
+      <%= select_hour(0, {ampm: true} ,class:'control-label', name: 'date[hour2]') %>
+    </div>
+    <div class="col-sm-10 col-sm-offset-2">
+      <%= label_tag "超時加價 每小時",nil, class: "control-label"%>
+      <%= number_field_tag :over_time_price %>
+      <%= label_tag "元",nil, class: "control-label"%>
+    </div>
+    <%= f.submit "完成", class: "btn btn-primary pull-right" %>
+  </div>
+  
+
+  
+  
 <% end %>

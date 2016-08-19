@@ -95,6 +95,25 @@ class ProfilesController < ApplicationController
           end
         end
       end
+
+      #save over work time&price
+      if params[:date][:hour] && params[:date][:hour2]
+        Profile.update(user_id: current_user.id, over_work_time1: params[:date][:hour], over_work_time2: params[:date][:hour2] )
+      end
+
+      #save half&full day price
+      if params[:half]&&params[:half_day_price]
+        Profile.update(user_id: current_user.id, half_day_time: params[:half], half_day_price: params[:half_day_price])
+      end
+
+      if params[:full]&&params[:full_day_price]
+        Profile.update(user_id: current_user.id, full_day_time: params[:full], full_day_price: params[:full_day_price])
+      end
+
+      # over_time_proce
+      if params[:over_time_price]
+        Profile.update(user_id: current_user.id, over_work_price: params[:over_time_price])
+      end
       
       redirect_to root_url
     else
