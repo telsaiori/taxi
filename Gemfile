@@ -7,6 +7,8 @@ gem 'rails', '~> 5.0.0'
 gem 'devise'
 gem 'bootstrap-sass'
 gem 'simple_form'
+gem 'carrierwave'
+gem 'mini_magick'
 
 gem 'sqlite3'
 # Use Puma as the app server

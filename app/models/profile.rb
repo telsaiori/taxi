@@ -12,4 +12,6 @@ class Profile < ApplicationRecord
   has_many :profile_for_airports, dependent: :destroy
   has_many :profile_for_high_rails, dependent: :destroy
   belongs_to :user
+
+  mount_uploader :image, ImageUploader, mount_on: :photo
 end

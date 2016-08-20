@@ -14,7 +14,8 @@
         <ul class="header-right">
           <% if user_signed_in? %>
             <li>Log in as <%= current_user.email%></li>
-            <%= link_to 'Edit Profile', new_profile_path %>
+            <%= link_to '新增資料', new_profile_path %>
+            <%= link_to '編輯資料', edit_profile_path(current_user.id) %>
             <%= link_to 'Sign Out', destroy_user_session_path, method: :delete %>
           <% else %>
             <%= link_to 'Log_in', new_user_session_path %>

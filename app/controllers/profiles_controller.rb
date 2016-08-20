@@ -3,7 +3,8 @@ class ProfilesController < ApplicationController
   before_action :set_profile, only:[:edit]
 
   def new
-    @profile = current_user.build_profile
+    # @profile = current_user.build_profile
+    @profile = Profile.new
   end
 
   def create
@@ -26,7 +27,7 @@ class ProfilesController < ApplicationController
         unless custom_car.empty?
           car = Car.where(name: custom_car).first
           if car 
-            unless ProfileCar.where(profile_id: current_user.profile.id, car_id: car.id)>0
+            unless ProfileCar.where(profile_id: current_user.profile.id, car_id: car.id).any?
               ProfileCar.create(profile_id: current_user.profile.id, car_id: car.id)
             end
           else
@@ -101,19 +102,19 @@ class ProfilesController < ApplicationController
         Profile.update(user_id: current_user.id, over_work_time1: params[:date][:hour], over_work_time2: params[:date][:hour2] )
       end
 
-      #save half&full day price
-      if params[:half]&&params[:half_day_price]
-        Profile.update(user_id: current_user.id, half_day_time: params[:half], half_day_price: params[:half_day_price])
-      end
+      # #save half&full day price
+      # if params[:half]&&params[:half_day_price]
+      #   Profile.update(user_id: current_user.id, half_day_time: params[:half], half_day_price: params[:half_day_price])
+      # end
 
-      if params[:full]&&params[:full_day_price]
-        Profile.update(user_id: current_user.id, full_day_time: params[:full], full_day_price: params[:full_day_price])
-      end
+      # if params[:full]&&params[:full_day_price]
+      #   Profile.update(user_id: current_user.id, full_day_time: params[:full], full_day_price: params[:full_day_price])
+      # end
 
-      # over_time_proce
-      if params[:over_time_price]
-        Profile.update(user_id: current_user.id, over_work_price: params[:over_time_price])
-      end
+      # # over_time_proce
+      # if params[:over_time_price]
+      #   Profile.update(user_id: current_user.id, over_work_price: params[:over_time_price])
+      # end
       
       redirect_to root_url
     else
@@ -126,13 +127,13 @@ class ProfilesController < ApplicationController
 
   private
 
-  def profile_params
-    params.require(:profile).permit(:name, :car_age, :capacity, :insurance, { 
-                              car_ids:[],equiment_ids:[], language_ids:[], for_travel_ids:[], for_airport_ids:[],for_high_rail_ids:[] })
-  end
-
   def set_profile
     @profile = Profile.find_by(user_id: current_user.id)
+  end
+
+  def profile_params
+    params.require(:profile).permit(:name, :car_age, :capacity, :insurance,:photo, :user_id,{ 
+                              car_ids:[],equiment_ids:[], language_ids:[], for_travel_ids:[], for_airport_ids:[],for_high_rail_ids:[] })
   end
 
   # def custom(is_custom, custom, db, assosiation, id)

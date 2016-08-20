@@ -6,10 +6,21 @@
     </div>
   </div>
 
+  <div class="form-group">
+    <%= f.label :photo, "司機顯示照片", class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.file_field :photo %>
+    </div>
+  </div>
+
 
   <div class="form-group">
     <%= label_tag '車型',nil, class: "control-label col-sm-2" %>
-    <% profile_cars = ProfileCar.where(profile_id: current_user.profile.id).select(:id, :car_id).map{ |i| i.car.id}.uniq%>
+    <% if current_user.profile %>
+      <% profile_cars = ProfileCar.where(profile_id: current_user.profile.id).select(:id, :car_id).map{ |i| i.car.id}.uniq%>
+    <% else %>
+      <% profile_cars = [] %>
+    <% end %>
     <div class="col-sm-10" >
       <% Car.select(:id, :name).where(is_default: true).each do |car| %>
         <%= check_box_tag "car_select[]", car.id, profile_cars.include?(car.id), class: "checkbox-inline"%>
@@ -62,14 +73,14 @@
         <%= b.check_box class: "checkbox-inline" %>
         <%= b.label %>
       <% end %>
-      <%= check_box_tag :is_custom_lan, nil, nil, onclick: "custom_lan_disable();" %> <%= text_field_tag :custom_lan, nil, disabled: true %>
+      <%= check_box_tag :is_custom_lan, nil, nil, onclick: "custom_lan_disable();" %> 其他<%= text_field_tag :custom_lan, nil, disabled: true %>
     </div>
   </div>
 
   <div class="form-group">
     <%= f.label :insurance, "保險", class: "col-sm-2 control-label"%>
     <div class="col-sm-10" >
-      <%= check_box_tag :insurance_check,nil,nil, {class: "checkbox-inline", onclick: 'insurance_input_disable();'} %>
+      <%= check_box_tag :insurance_check,nil,nil, {class: "checkbox-inline", onclick: 'insurance_input_disable();', checked: @profile.insurance?} %>
       意外險<%= f.number_field :insurance , disabled: true%>萬元
     </div>
   </div>
@@ -122,35 +133,35 @@
     
     <div class="col-sm-10">
       <%= label_tag "半日", nil, class: "control-label" %>
-      <%= radio_button_tag :half, 4%>
+      <%= f.radio_button :half_day_price, 4%>
       <%=label_tag "4", nil, class: "control-label" %>
-      <%= radio_button_tag :half, 5%>
+      <%= f.radio_button :half_day_price, 5%>
       <%=label_tag "5", nil, class: "control-label" %>
       <%=label_tag "小時,", nil, class: "control-label" %>
-      <%= number_field_tag :half_day_price, nil %>
+      <%= f.number_field :half_day_price %>
       <%=label_tag "元", nil, class: "control-label" %>
     </div>
 
     <div class="col-sm-10 col-sm-offset-2">
       <%= label_tag "一日", nil, class: "control-label" %>
-      <%= radio_button_tag :full, 4%>
+      <%= f.radio_button :full_day_time, 4%>
       <%=label_tag "8", nil, class: "control-label" %>
-      <%= radio_button_tag :full, 5%>
+      <%= f.radio_button :full_day_time, 5%>
       <%=label_tag "10", nil, class: "control-label" %>
       <%=label_tag "小時,", nil, class: "control-label" %>
-      <%= number_field_tag :full_day_price, nil %>
+      <%= f.number_field :full_day_price %>
       <%=label_tag "元", nil, class: "control-label" %>
     </div>
   
     <div class="col-sm-10 col-sm-offset-2">
       <%= f.label :over_work_time,"超時時段", class: "control-label" %>
-      <%= select_hour(0, {ampm: true} ,class:'control-label') %>
+      <%= select_hour(@profile.over_work_time1.to_i, {ampm: true} ,class:'control-label') %>
       <%= f.label :over_work_time,"~", class: "control-label" %>
-      <%= select_hour(0, {ampm: true} ,class:'control-label', name: 'date[hour2]') %>
+      <%= select_hour(@profile.over_work_time2.to_i, {ampm: true} ,class:'control-label', name: 'date[hour2]') %>
     </div>
     <div class="col-sm-10 col-sm-offset-2">
       <%= label_tag "超時加價 每小時",nil, class: "control-label"%>
-      <%= number_field_tag :over_time_price %>
+      <%= f.number_field :over_work_price %>
       <%= label_tag "元",nil, class: "control-label"%>
     </div>
     <%= f.submit "完成", class: "btn btn-primary pull-right" %>
