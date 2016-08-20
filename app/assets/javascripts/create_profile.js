@@ -7,7 +7,7 @@ function insurance_input_disable(){
 }
 
 
-function custom_car_desable(){
+function custom_car_disable(){
   if (document.getElementById("is_custom_car").checked){
     document.getElementById("custom_car").disabled = false;
   }else{
@@ -34,7 +34,7 @@ function custom_lan_disable(){
 function for_travel(){
   var i;
   var x = document.getElementsByName("profile[for_travel_ids][]")
-  if (document.getElementById("is_travel").checked){
+  if (document.getElementById("profile_is_for_travel").checked){
     for (i=1; i<=x.length-1; i++){
       x[i].disabled = false;
     }
@@ -58,7 +58,7 @@ function for_travel_etc(){
 function for_airport(){
   var i;
   var x = document.getElementsByName("profile[for_airport_ids][]")
-  if (document.getElementById("is_airport").checked){
+  if (document.getElementById("profile_is_for_airport").checked){
     for (i=1; i<=x.length-1; i++){
       x[i].disabled = false;
     }
@@ -82,7 +82,7 @@ function for_airport_etc(){
 function for_high_rail(){
   var i;
   var x = document.getElementsByName("profile[for_high_rail_ids][]")
-  if (document.getElementById("is_high_rail").checked){
+  if (document.getElementById("profile_is_for_hr").checked){
     for( i=1; i <= x.length-1; i++){
       x[i].disabled = false;
     }

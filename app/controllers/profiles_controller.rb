@@ -132,7 +132,7 @@ class ProfilesController < ApplicationController
   end
 
   def profile_params
-    params.require(:profile).permit(:name, :car_age, :capacity, :insurance,:photo, :user_id,{ 
+    params.require(:profile).permit(:name, :car_age, :capacity, :insurance,:photo, :user_id, :is_for_travel, :is_for_airport, :is_for_hr, { 
                               car_ids:[],equiment_ids:[], language_ids:[], for_travel_ids:[], for_airport_ids:[],for_high_rail_ids:[] })
   end
 

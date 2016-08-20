@@ -23,7 +23,7 @@
       <% profile_cars = [] %>
     <% end %>
 
-    <% if current_user.profile.profile_cars.any?  %>
+    <% if current_user.profile  %>
         <% custom_car = current_user.profile.cars.where(is_default: false).last.name %>
       <% else %>
         <% custom_car = "" %>
@@ -34,7 +34,7 @@
         <%= check_box_tag "car_select[]", car.id, profile_cars.include?(car.id), class: "checkbox-inline"%>
         <%= label_tag car.name, nil, class: "control-label" %>
       <% end %>
-      <%= check_box_tag "is_custom_car", nil, nil, onclick: 'custom_car_desable();' %>其他<%= text_field_tag :custom_car,custom_car, disabled: true %>
+      <%= check_box_tag "is_custom_car", nil, nil, onclick: 'custom_car_disable();' %>其他<%= text_field_tag :custom_car,custom_car, disabled: true %>
       </div>
   </div>
 <!-- 
@@ -67,7 +67,7 @@
     <%=f.label :name, "設備", class: "col-sm-2 control-label" %>
     <div class="col-sm-10">
       
-      <% if current_user.profile.equiments.any?  %>
+      <% if current_user.profile  %>
         <% custom_eq = current_user.profile.equiments.where(is_default: false).last.name %>
       <% else %>
         <% custom_eq = "" %>
@@ -83,7 +83,7 @@
 
   <div class="form-group">
 
-    <% if current_user.profile.languages.any?  %>
+    <% if current_user.profile %>
         <% custom_lan = current_user.profile.languages.where(is_default: false).last.name %>
       <% else %>
         <% custom_lan = "" %>
@@ -110,8 +110,8 @@
   <div class="form-group">
     <%= f.label :services, "服務項目", class: "col-sm-2 control-label" %>
     <div class="col-sm-10">
-    <%= check_box_tag :is_travel, nil ,nil, onclick: "for_travel();"%>
-    <%= label_tag "旅遊包車:"%>
+    <%= f.check_box :is_for_travel, onclick: "for_travel();"%>
+    <%= f.label :is_for_travel, "旅遊包車:"%>
     </div>
     <div class="col-sm-10">
         <%= label_tag :service_location, "可接送地:", class: "control-label" %>
@@ -123,7 +123,7 @@
     </div>
     
     <div class="col-sm-offset-2 col-sm-10 ">
-    <%= check_box_tag :is_airport, nil ,nil, onclick: "for_airport();"%>
+    <%= f.check_box :is_for_airport, onclick: "for_airport();"%>
     <%= label_tag "機場接送:", nil, class: "control-label"%>
     </div>
 
@@ -138,7 +138,7 @@
     </div>
 
     <div class="col-sm-10 col-sm-offset-2">
-      <%= check_box_tag :is_high_rail,nil,nil, onclick: "for_high_rail();" %>
+      <%= f.check_box :is_for_hr, onclick: "for_high_rail();" %>
       <%= label_tag "高鐵接送:",nil, class: "control-label" %>
     </div>
 
