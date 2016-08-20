@@ -16,17 +16,25 @@
 
   <div class="form-group">
     <%= label_tag '車型',nil, class: "control-label col-sm-2" %>
+    
     <% if current_user.profile %>
       <% profile_cars = ProfileCar.where(profile_id: current_user.profile.id).select(:id, :car_id).map{ |i| i.car.id}.uniq%>
     <% else %>
       <% profile_cars = [] %>
     <% end %>
+
+    <% if current_user.profile.profile_cars.any?  %>
+        <% custom_car = current_user.profile.cars.where(is_default: false).last.name %>
+      <% else %>
+        <% custom_car = "" %>
+    <% end %>
+
     <div class="col-sm-10" >
       <% Car.select(:id, :name).where(is_default: true).each do |car| %>
         <%= check_box_tag "car_select[]", car.id, profile_cars.include?(car.id), class: "checkbox-inline"%>
         <%= label_tag car.name, nil, class: "control-label" %>
       <% end %>
-      <%= check_box_tag "is_custom_car", nil, nil, onclick: 'custom_car_desable();' %>其他<%= text_field_tag :custom_car,nil, disabled: true %>
+      <%= check_box_tag "is_custom_car", nil, nil, onclick: 'custom_car_desable();' %>其他<%= text_field_tag :custom_car,custom_car, disabled: true %>
       </div>
   </div>
 <!-- 
@@ -58,22 +66,36 @@
   <div class="form-group">
     <%=f.label :name, "設備", class: "col-sm-2 control-label" %>
     <div class="col-sm-10">
+      
+      <% if current_user.profile.equiments.any?  %>
+        <% custom_eq = current_user.profile.equiments.where(is_default: false).last.name %>
+      <% else %>
+        <% custom_eq = "" %>
+      <% end %>
+
       <%=f.collection_check_boxes(:equiment_ids, Equiment.where(is_default: true), :id, :name) do |b| %>
         <%= b.check_box class: "checkbox-inline" %>
         <%= b.label %>
       <% end %>
-      <%= check_box_tag :is_custom_eq,nil, nil, onclick: 'custom_eq_disable();' %>其他<%= text_field_tag :custom_eq, nil, disabled: true%>
+      <%= check_box_tag :is_custom_eq,nil, nil, onclick: 'custom_eq_disable();' %>其他<%= text_field_tag :custom_eq, custom_eq, disabled: true%>
     </div>
   </div>
 
   <div class="form-group">
+
+    <% if current_user.profile.languages.any?  %>
+        <% custom_lan = current_user.profile.languages.where(is_default: false).last.name %>
+      <% else %>
+        <% custom_lan = "" %>
+    <% end %>
+
     <%= f.label :name, "語言", class: "col-sm-2 control-label" %>
     <div class="col-sm-10">
       <%= f.collection_check_boxes(:language_ids, Language.where(is_default: true), :id, :name) do |b| %>
         <%= b.check_box class: "checkbox-inline" %>
         <%= b.label %>
       <% end %>
-      <%= check_box_tag :is_custom_lan, nil, nil, onclick: "custom_lan_disable();" %> 其他<%= text_field_tag :custom_lan, nil, disabled: true %>
+      <%= check_box_tag :is_custom_lan, nil, nil, onclick: "custom_lan_disable();" %> 其他<%= text_field_tag :custom_lan, custom_lan, disabled: true %>
     </div>
   </div>
 

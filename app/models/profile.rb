@@ -1,7 +1,7 @@
 class Profile < ApplicationRecord
   has_many :cars, through: :profile_cars
   has_many :equiments, through: :profile_equiments
-  has_many :language, through: :profile_languages
+  has_many :languages, through: :profile_languages
   has_many :for_travels, through: :profile_for_travels
   has_many :for_airports, through: :profile_for_airports
   has_many :for_high_rails, through: :profile_for_high_rails

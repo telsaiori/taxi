@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160819120338) do
+ActiveRecord::Schema.define(version: 20160820105443) do
 
   create_table "cars", force: :cascade do |t|
     t.datetime "created_at",                 null: false
@@ -108,8 +108,8 @@ ActiveRecord::Schema.define(version: 20160819120338) do
     t.string   "picture"
     t.integer  "car_age"
     t.integer  "capacity"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.integer  "user_id"
     t.integer  "insurance"
     t.integer  "half_day_time"
@@ -120,6 +120,9 @@ ActiveRecord::Schema.define(version: 20160819120338) do
     t.integer  "full_day_time"
     t.integer  "full_day_price"
     t.string   "photo"
+    t.boolean  "is_for_travel",   default: false
+    t.boolean  "is_for_airport",  default: false
+    t.boolean  "is_for_hr",       default: false
   end
 
   create_table "users", force: :cascade do |t|
