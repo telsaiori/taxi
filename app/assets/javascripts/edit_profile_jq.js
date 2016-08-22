@@ -44,5 +44,13 @@ $(document).on('turbolinks:load', function() {
     $('#custom_airport').prop("disabled", false);
   }
 
+  if ($('#profile_is_for_hr').prop("checked")){
+    var i ;
+    var x = $('.hr-checked-box .checkbox-inline');
+    for (i=0; i<= x.length-1;i++){
+      x[i].disabled = false;
+    }
+  }
+
 });
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160820112058) do
+ActiveRecord::Schema.define(version: 20160822122525) do
 
   create_table "cars", force: :cascade do |t|
     t.datetime "created_at",                 null: false
@@ -119,10 +119,10 @@ ActiveRecord::Schema.define(version: 20160820112058) do
     t.integer  "over_work_price"
     t.integer  "full_day_time"
     t.integer  "full_day_price"
-    t.string   "photo"
     t.boolean  "is_for_travel",   default: false
     t.boolean  "is_for_airport",  default: false
     t.boolean  "is_for_hr",       default: false
+    t.string   "image"
   end
 
   create_table "users", force: :cascade do |t|

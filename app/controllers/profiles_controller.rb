@@ -25,8 +25,8 @@ class ProfilesController < ApplicationController
       add_custom_car(params[:custom_car],params[:is_custom_car])
       add_custom_eq(params[:is_custom_eq], params[:custom_eq])
       add_custom_language(params[:custom_lan],params[:is_custom_lan])
-      add_custom_travel(params[:is_travel], params[:is_custom_travel], params[:custom_travel])
-      add_custom_airport(params[:is_airport], params[:is_custom_airport], params[:custom_airport])
+      add_custom_travel(params[:profile][:is_travel], params[:is_custom_travel], params[:custom_travel])
+      add_custom_airport(params[:profile][:is_airport], params[:is_custom_airport], params[:custom_airport])
       
       #save over work time&price
       if params[:date][:hour] && params[:date][:hour2]
@@ -89,8 +89,8 @@ class ProfilesController < ApplicationController
       add_custom_car(params[:custom_car],params[:is_custom_car])
       add_custom_eq(params[:is_custom_eq], params[:custom_eq])
       add_custom_language(params[:custom_lan],params[:is_custom_lan])
-      add_custom_travel(params[:is_travel], params[:is_custom_travel], params[:custom_travel])
-      add_custom_airport(params[:is_airport], params[:is_custom_airport], params[:custom_airport])
+      add_custom_travel(params[:profile][:is_for_travel], params[:is_custom_travel], params[:custom_travel])
+      add_custom_airport(params[:profile][:is_for_airport], params[:is_custom_airport], params[:custom_airport])
       redirect_to root_url
     end
   end
@@ -135,7 +135,7 @@ class ProfilesController < ApplicationController
       unless custom_eq.empty?
         equiment = Equiment.where(name: custom_eq).first
         if equiment
-          unless ProfileEquiment.where(profile_id: current_user.profile.id, equiment_id: equiment.id ) > 0
+          unless ProfileEquiment.where(profile_id: current_user.profile.id, equiment_id: equiment.id ).any?
             ProfileEquiment.create( profile_id: current_user.profile.id, equiment_id: equiment.id )
           end
         else
@@ -152,7 +152,7 @@ class ProfilesController < ApplicationController
       unless custom_lan.empty?
         language = Language.where(name: custom_lan).first
         if language
-          unless ProfileLanguage.where(profile_id: current_user.profile.id, language_id: language.id ) > 0
+          unless ProfileLanguage.where(profile_id: current_user.profile.id, language_id: language.id ).any?
             ProfileLanguage.create( profile_id: current_user.profile.id, language_id: language.id)
           end
         else
@@ -169,7 +169,7 @@ class ProfilesController < ApplicationController
       unless custom_travel.empty?
         for_travel = ForTravel.where(location: custom_travel).first
         if for_travel
-          unless ProfileForTravel.where(profile_id: current_user.profile.id, for_travel_id: for_travel.id ) > 0
+          unless ProfileForTravel.where(profile_id: current_user.profile.id, for_travel_id: for_travel.id ).any?
             ProfileForTravel.create( profile_id: current_user.profile.id, for_travel_id: for_travel.id)
           end
         else
@@ -181,12 +181,12 @@ class ProfilesController < ApplicationController
   end
 
   def add_custom_airport(params_is_airport, params_is_custom_airport, params_custom_airport)
-    if params[:is_airport]&&params[:is_custom_airport]&&params[:custom_airport]
+    if params_is_airport && params_is_custom_airport && params_custom_airport
       custom_airport = params[:custom_airport].to_s.strip
       unless custom_airport.empty?
         for_airport = ForAirport.where(location: custom_airport).first
         if for_airport
-          unless ProfileForAirport.where(profile_id: current_user.profile.id, for_airport_id: for_airport.id) > 0
+          unless ProfileForAirport.where(profile_id: current_user.profile.id, for_airport_id: for_airport.id).any?
             ProfileForAirport.create(profile_id: current_user.profile.id, for_airport_id: for_airport.id)
           end
         else
