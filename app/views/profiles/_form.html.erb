@@ -10,7 +10,7 @@
     <%= f.label :image, "司機顯示照片", class: "col-sm-2 control-label" %>
     <div class="col-sm-10">
     <% if current_user.profile %>
-      <%= image_tag current_user.profile.image.url unless current_user.profile.image.blank?%>
+      <%= image_tag current_user.profile.image.thumb.url unless current_user.profile.image.blank?%>
     <% end %>
       <%= f.file_field :image %>
     </div>
