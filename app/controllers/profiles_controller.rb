@@ -22,81 +22,12 @@ class ProfilesController < ApplicationController
         ProfileCar.create(profile_id: current_user.profile.id, car_id: car_id)
       end
 
-      if params[:custom_car]&&params[:is_custom_car]
-        custom_car = params[:custom_car].to_s.strip
-        unless custom_car.empty?
-          car = Car.where(name: custom_car).first
-          if car 
-            unless ProfileCar.where(profile_id: current_user.profile.id, car_id: car.id).any?
-              ProfileCar.create(profile_id: current_user.profile.id, car_id: car.id)
-            end
-          else
-            car = Car.create(name: custom_car)
-            ProfileCar.create(profile_id: current_user.profile.id, car_id: car.id)
-          end
-        end
-      end
-
-      if params[:is_custom_eq] && params[:custom_eq]
-        custom_eq = params[:custom_eq].to_s.strip
-        unless custom_eq.empty?
-          equiment = Equiment.where(name: custom_eq).first
-          if equiment
-            unless ProfileEquiment.where(profile_id: current_user.profile.id, equiment_id: equiment.id ) > 0
-              ProfileEquiment.create( profile_id: current_user.profile.id, equiment_id: equiment.id )
-            end
-          else
-            equiment = Equiment.create(name: custom_eq)
-            ProfileEquiment.create(profile_id: current_user.profile.id, equiment_id: equiment.id)
-          end
-        end
-      end
-
-      if params[:is_custom_lan] && params[:custom_lan]
-        custom_lan = params[:custom_lan].to_s.strip
-        unless custom_lan.empty?
-          language = Language.where(name: custom_lan).first
-          if language
-            unless ProfileLanguage.where(profile_id: current_user.profile.id, language_id: language.id ) > 0
-              ProfileLanguage.create( profile_id: current_user.profile.id, language_id: language.id)
-            end
-          else
-            language = Language.create(name: custom_lan)
-            ProfileLanguage.create(profile_id: current_user.profile.id, language_id: language.id)
-          end
-        end
-      end
-
-      if params[:is_travel]&&params[:is_custom_travel] && params[:custom_travel]
-        custom_travel = params[:custom_travel].to_s.strip
-        unless custom_travel.empty?
-          for_travel = ForTravel.where(location: custom_travel).first
-          if for_travel
-            unless ProfileForTravel.where(profile_id: current_user.profile.id, for_travel_id: for_travel.id ) > 0
-              ProfileForTravel.create( profile_id: current_user.profile.id, for_travel_id: for_travel.id)
-            end
-          else
-            for_travel = ForTravel.create(location: custom_travel)
-            ProfileForTravel.create(profile_id: current_user.profile.id, for_travel_id: for_travel.id)
-          end
-        end
-      end
-
-      if params[:is_airport]&&params[:is_custom_airport]&&params[:custom_airport]
-        custom_airport = params[:custom_airport].to_s.strip
-        unless custom_airport.empty?
-          for_airport = ForAirport.where(location: custom_airport).first
-          if for_airport
-            unless ProfileForAirport.where(profile_id: current_user.profile.id, for_airport_id: for_airport.id) > 0
-              ProfileForAirport.create(profile_id: current_user.profile.id, for_airport_id: for_airport.id)
-            end
-          else
-            for_airport = ForAirport.create(location: custom_airport)
-            ProfileForAirport.create(profile_id: current_user.profile.id, for_airport_id: for_airport.id)
-          end
-        end
-      end
-
+      add_custom_car(params[:custom_car],params[:is_custom_car])
+      add_custom_eq(params[:is_custom_eq], params[:custom_eq])
+      add_custom_language(params[:custom_lan],params[:is_custom_lan])
+      add_custom_travel(params[:is_travel], params[:is_custom_travel], params[:custom_travel])
+      add_custom_airport(params[:is_airport], params[:is_custom_airport], params[:custom_airport])
+      
       #save over work time&price
       if params[:date][:hour] && params[:date][:hour2]
         Profile.update(user_id: current_user.id, over_work_time1: params[:date][:hour], over_work_time2: params[:date][:hour2] )
@@ -153,24 +84,13 @@ class ProfilesController < ApplicationController
     new_car_id_set.each do |car_id|
         ProfileCar.create(profile_id: current_user.profile.id, car_id: car_id)
     end
-
-    #add new custom car
-    if params[:custom_car]&&params[:is_custom_car]
-      custom_car = params[:custom_car].to_s.strip
-      unless custom_car.empty?
-        car = Car.where(name: custom_car).first
-        if car 
-          unless ProfileCar.where(profile_id: current_user.profile.id, car_id: car.id).any?
-            ProfileCar.create(profile_id: current_user.profile.id, car_id: car.id)
-          end
-        else
-          car = Car.create(name: custom_car)
-          ProfileCar.create(profile_id: current_user.profile.id, car_id: car.id)
-        end
-      end
-    end
-    
+  
     if @profile.update(profile_params)
+      add_custom_car(params[:custom_car],params[:is_custom_car])
+      add_custom_eq(params[:is_custom_eq], params[:custom_eq])
+      add_custom_language(params[:custom_lan],params[:is_custom_lan])
+      add_custom_travel(params[:is_travel], params[:is_custom_travel], params[:custom_travel])
+      add_custom_airport(params[:is_airport], params[:is_custom_airport], params[:custom_airport])
       redirect_to root_url
     end
   end
@@ -189,6 +109,91 @@ class ProfilesController < ApplicationController
   def is_profile_exist
     if current_user.profile
       redirect_to edit_profile_url(current_user.id)
+    end
+  end
+
+  def add_custom_car(params_custom_car,params_is_custom_car)
+    if params_custom_car && params_is_custom_car
+      custom_car = params_custom_car.to_s.strip
+      unless custom_car.empty?
+        car = Car.where(name: custom_car).first
+        if car 
+          unless ProfileCar.where(profile_id: current_user.profile.id, car_id: car.id).any?
+            ProfileCar.create(profile_id: current_user.profile.id, car_id: car.id)
+          end
+        else
+          car = Car.create(name: custom_car)
+          ProfileCar.create(profile_id: current_user.profile.id, car_id: car.id)
+        end
+      end
+    end
+  end
+
+  def add_custom_eq(params_custom_eq,params_is_custom_eq)
+    if params_is_custom_eq && params_custom_eq
+      custom_eq = params_custom_eq.to_s.strip
+      unless custom_eq.empty?
+        equiment = Equiment.where(name: custom_eq).first
+        if equiment
+          unless ProfileEquiment.where(profile_id: current_user.profile.id, equiment_id: equiment.id ) > 0
+            ProfileEquiment.create( profile_id: current_user.profile.id, equiment_id: equiment.id )
+          end
+        else
+          equiment = Equiment.create(name: custom_eq)
+          ProfileEquiment.create(profile_id: current_user.profile.id, equiment_id: equiment.id)
+        end
+      end
+    end 
+  end
+
+  def add_custom_language(params_custom_lan,params_is_custom_lan)
+    if params_is_custom_lan && params_custom_lan
+      custom_lan = params[:custom_lan].to_s.strip
+      unless custom_lan.empty?
+        language = Language.where(name: custom_lan).first
+        if language
+          unless ProfileLanguage.where(profile_id: current_user.profile.id, language_id: language.id ) > 0
+            ProfileLanguage.create( profile_id: current_user.profile.id, language_id: language.id)
+          end
+        else
+          language = Language.create(name: custom_lan)
+          ProfileLanguage.create(profile_id: current_user.profile.id, language_id: language.id)
+        end
+      end
+    end
+  end
+
+  def add_custom_travel( params_is_travel, params_is_custom_travel, params_custom_travel)
+    if params_is_travel && params_is_custom_travel && params_custom_travel
+      custom_travel = params_custom_travel.to_s.strip
+      unless custom_travel.empty?
+        for_travel = ForTravel.where(location: custom_travel).first
+        if for_travel
+          unless ProfileForTravel.where(profile_id: current_user.profile.id, for_travel_id: for_travel.id ) > 0
+            ProfileForTravel.create( profile_id: current_user.profile.id, for_travel_id: for_travel.id)
+          end
+        else
+          for_travel = ForTravel.create(location: custom_travel)
+          ProfileForTravel.create(profile_id: current_user.profile.id, for_travel_id: for_travel.id)
+        end
+      end
+    end
+  end
+
+  def add_custom_airport(params_is_airport, params_is_custom_airport, params_custom_airport)
+    if params[:is_airport]&&params[:is_custom_airport]&&params[:custom_airport]
+      custom_airport = params[:custom_airport].to_s.strip
+      unless custom_airport.empty?
+        for_airport = ForAirport.where(location: custom_airport).first
+        if for_airport
+          unless ProfileForAirport.where(profile_id: current_user.profile.id, for_airport_id: for_airport.id) > 0
+            ProfileForAirport.create(profile_id: current_user.profile.id, for_airport_id: for_airport.id)
+          end
+        else
+          for_airport = ForAirport.create(location: custom_airport)
+          ProfileForAirport.create(profile_id: current_user.profile.id, for_airport_id: for_airport.id)
+        end
+      end
     end
   end
 
