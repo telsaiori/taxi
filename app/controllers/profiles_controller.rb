@@ -1,9 +1,9 @@
 class ProfilesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_profile, only:[:edit]
+  before_action :is_profile_exist, only:[:new]
+  before_action :set_profile, only:[:edit, :update]
 
   def new
-    # @profile = current_user.build_profile
     @profile = Profile.new
   end
 
@@ -125,6 +125,56 @@ class ProfilesController < ApplicationController
   def edit
   end
 
+  def update
+    if params[:car_select]
+      new_car_id_set = params[:car_select].map{|i| i.to_i}.uniq
+    else
+      new_car_id_set = []
+    end
+
+    unless Car.where(name: params[:custom_car]).empty?
+      new_car_id_set << Car.where(name: params[:custom_car]).first.id
+    end
+    
+    old_car_id_set = ProfileCar.where(profile_id: current_user.profile.id).select(:car_id).map{|i| i.car_id}
+    need_create = new_car_id_set - old_car_id_set
+    need_delete = old_car_id_set - new_car_id_set   
+    
+    unless need_create.empty?
+      need_create.each do |car_id|
+        ProfileCar.create(:profile_id => current_user.profile.id , :car_id => car_id)
+      end
+    end
+    
+    unless need_delete.empty?
+      ProfileCar.where(:car_id => need_delete, profile_id: current_user.profile.id).delete_all
+    end
+
+    new_car_id_set.each do |car_id|
+        ProfileCar.create(profile_id: current_user.profile.id, car_id: car_id)
+    end
+
+    #add new custom car
+    if params[:custom_car]&&params[:is_custom_car]
+      custom_car = params[:custom_car].to_s.strip
+      unless custom_car.empty?
+        car = Car.where(name: custom_car).first
+        if car 
+          unless ProfileCar.where(profile_id: current_user.profile.id, car_id: car.id).any?
+            ProfileCar.create(profile_id: current_user.profile.id, car_id: car.id)
+          end
+        else
+          car = Car.create(name: custom_car)
+          ProfileCar.create(profile_id: current_user.profile.id, car_id: car.id)
+        end
+      end
+    end
+    
+    if @profile.update(profile_params)
+      redirect_to root_url
+    end
+  end
+
   private
 
   def set_profile
@@ -134,6 +184,12 @@ class ProfilesController < ApplicationController
   def profile_params
     params.require(:profile).permit(:name, :car_age, :capacity, :insurance,:photo, :user_id, :is_for_travel, :is_for_airport, :is_for_hr, { 
                               car_ids:[],equiment_ids:[], language_ids:[], for_travel_ids:[], for_airport_ids:[],for_high_rail_ids:[] })
+  end
+
+  def is_profile_exist
+    if current_user.profile
+      redirect_to edit_profile_url(current_user.id)
+    end
   end
 
   # def custom(is_custom, custom, db, assosiation, id)
