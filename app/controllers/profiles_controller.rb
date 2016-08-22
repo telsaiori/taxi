@@ -2,6 +2,7 @@ class ProfilesController < ApplicationController
   before_action :authenticate_user!
   before_action :is_profile_exist, only:[:new]
   before_action :set_profile, only:[:edit, :update]
+  before_action :check_profile, only:[:edit]
 
   def new
     @profile = Profile.new
@@ -71,7 +72,7 @@ class ProfilesController < ApplicationController
     need_create = new_car_id_set - old_car_id_set
     need_delete = old_car_id_set - new_car_id_set   
     
-    unless need_create.empty?
+    unless need_create.empty?    
       need_create.each do |car_id|
         ProfileCar.create(:profile_id => current_user.profile.id , :car_id => car_id)
       end
@@ -195,6 +196,13 @@ class ProfilesController < ApplicationController
         end
       end
     end
+  end
+
+  def check_profile
+    unless !!current_user.profile
+      redirect_to new_profile_path
+    end
+
   end
 
   # def custom(is_custom, custom, db, assosiation, id)
