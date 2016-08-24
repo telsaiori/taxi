@@ -92,6 +92,10 @@ class ProfilesController < ApplicationController
       add_custom_language(params[:custom_lan],params[:is_custom_lan])
       add_custom_travel(params[:profile][:is_for_travel], params[:is_custom_travel], params[:custom_travel])
       add_custom_airport(params[:profile][:is_for_airport], params[:is_custom_airport], params[:custom_airport])
+
+    if params[:date][:hour] && params[:date][:hour2]
+      Profile.update(user_id: current_user.id, over_work_time1: params[:date][:hour], over_work_time2: params[:date][:hour2] )
+    end
       redirect_to root_url
     end
   end
@@ -103,7 +107,7 @@ class ProfilesController < ApplicationController
   end
 
   def profile_params
-    params.require(:profile).permit(:name, :car_age, :capacity, :insurance,:image, :user_id, :is_for_travel, :is_for_airport, :is_for_hr, { 
+    params.require(:profile).permit(:name, :car_age, :capacity, :insurance,:image, :user_id, :is_for_travel, :is_for_airport, :is_for_hr,:half_day_time, :half_day_price, :full_day_time, :full_day_price, :over_work_price, { 
                               car_ids:[],equiment_ids:[], language_ids:[], for_travel_ids:[], for_airport_ids:[],for_high_rail_ids:[] })
   end
 
