@@ -9,4 +9,5 @@ class User < ApplicationRecord
   validates :address, presence: true
   validates :tel, presence: true
   has_one :profile
+  has_one :team
 end

@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
+  get 'teams/new'
+
   resources :profiles
+  resources :teams
 
   devise_for :users, controllers: {
     registrations: 'users/registrations'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160826083546) do
+ActiveRecord::Schema.define(version: 20160826090430) do
 
   create_table "cars", force: :cascade do |t|
     t.datetime "created_at",                 null: false
@@ -123,6 +123,17 @@ ActiveRecord::Schema.define(version: 20160826083546) do
     t.boolean  "is_for_airport",  default: false
     t.boolean  "is_for_hr",       default: false
     t.string   "image"
+  end
+
+  create_table "teams", force: :cascade do |t|
+    t.string   "name"
+    t.string   "image"
+    t.text     "profile"
+    t.text     "contact"
+    t.text     "payment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "user_id"
   end
 
   create_table "users", force: :cascade do |t|

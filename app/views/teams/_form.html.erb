@@ -1,0 +1,42 @@
+<%= form_for @team, html: {class: "form-horizontal", role: "form"} do |f|%>
+  <div class="form-group">
+    <%= f.label :name," 車隊顯示名稱:", class: "control-label col-sm-2" %>
+    <div class="col-sm-10">
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :image, "顯示照片:", class: "control-label col-sm-2" %>
+    <div class="col-sm-10">
+      <% if current_user.team %>
+        <%= image_tag current_user.team.image.thumb.url unless current_user.team.image.blank?%>
+      <% end %>
+      <%= f.file_field :image %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :profile, "車隊介紹", class: "control-label col-sm-2" %>
+    <div class="col-sm-10">
+      <%= f.text_area :profile, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :contact, "聯絡資訊", class: "control-label col-sm-2" %>
+    <div class="col-sm-10">
+      <%=f.text_area :contact, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :payment, "付款資訊", class: "control-label col-sm-2" %>
+    <div class="col-sm-10">
+      <%=f.text_area :payment, class: "form-control" %>
+    </div>
+  </div>
+
+  <%= f.submit "完成", class: "btn btn-primary pull-right" %>
+
+<% end %>
